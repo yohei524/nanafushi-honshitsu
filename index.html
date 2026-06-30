@@ -1322,6 +1322,16 @@
       document.getElementById('sex-f').classList.toggle('active', s==='F');
     }
 
+    // 中級版用:存在しない要素への代入を安全に無視するためのダミーElement
+    (function(){
+      var origGet = document.getElementById.bind(document);
+      var dummy = { textContent:'', innerHTML:'', value:'', style:{}, classList:{add:function(){},remove:function(){},toggle:function(){}}, appendChild:function(){}, querySelectorAll:function(){return [];}, querySelector:function(){return null;} };
+      document.getElementById = function(id){
+        var el = origGet(id);
+        return el || dummy;
+      };
+    })();
+
     function calculate() {
       var name = document.getElementById('name').value.trim() || "ご本人";
       var yearStr = document.getElementById('year').value;
