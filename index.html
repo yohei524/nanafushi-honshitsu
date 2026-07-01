@@ -504,6 +504,134 @@
       .jinsei-figure { max-width: 280px; }
       .star-name { font-size: 12px; }
     }
+
+    /* ==== 最終上書き:天中殺チェッカーと統一の紺+金テーマ ==== */
+    /* コンテナ幅制限(スマホファースト) */
+    .container { max-width: 480px !important; padding: 0 !important; }
+    body { padding: 0 !important; font-size: 16px !important; }
+    .card { padding: 22px 24px !important; border-radius: 4px !important; }
+    /* 見出し・タイトル */
+    h1, h2, h3, h4 { color: var(--white) !important; font-weight: 300 !important; }
+    .section-title { color: var(--gold) !important; border-bottom: 1px solid var(--gold2) !important; padding-bottom: 8px !important; margin-bottom: 14px !important; font-size: 14px !important; letter-spacing: 3px !important; }
+    /* 白背景の残骸を全部消す */
+    .jintai-cell, .jintai-cell.shujou, .jintai-cell.jushou, .jintai-cell.center,
+    .tenchu-box, .shukumei-box, .gogyou-cell, .reading, .box, .kanji-box, .keyword-box, .cta-note {
+      background: rgba(248,246,242,0.04) !important;
+      color: var(--white) !important;
+      border-color: var(--line) !important;
+    }
+    .jintai-cell.center { background: rgba(200,169,110,0.15) !important; border: 1px solid var(--gold2) !important; }
+    .jintai-name, .jintai-label { color: var(--white) !important; }
+    .jintai-cell.center .jintai-label { color: var(--gold) !important; }
+    .jintai-label small { color: var(--white3) !important; }
+    .jintai-sub { color: var(--white3) !important; }
+    /* 天中殺ボックス */
+    .tenchu-label { color: var(--white3) !important; letter-spacing: 3px !important; }
+    .tenchu-value { color: var(--gold) !important; font-size: 22px !important; letter-spacing: 3px !important; }
+    .tenchu-desc { color: var(--white2) !important; line-height: 1.8 !important; }
+    /* 宿命天中殺 */
+    .shukumei-title { color: var(--gold) !important; font-weight: 400 !important; letter-spacing: 2px !important; }
+    .shukumei-list li { color: var(--white2) !important; border-color: var(--line) !important; }
+    .shukumei-list li::before { color: var(--gold) !important; }
+    /* 五行セル */
+    .gogyou-grid { gap: 8px !important; }
+    .gogyou-cell { padding: 12px 6px !important; border: 1px solid var(--line) !important; }
+    .gogyou-cell.moku { background: rgba(111,206,139,0.15) !important; }
+    .gogyou-cell.ka { background: rgba(255,106,106,0.15) !important; }
+    .gogyou-cell.do { background: rgba(216,181,110,0.15) !important; }
+    .gogyou-cell.kon { background: rgba(208,213,219,0.12) !important; }
+    .gogyou-cell.sui { background: rgba(110,160,230,0.15) !important; }
+    .gogyou-label { color: var(--white2) !important; opacity: 1 !important; font-size: 15px !important; }
+    .gogyou-value { color: var(--white) !important; font-size: 22px !important; }
+    /* 陰占テーブル */
+    .ininsen-table { color: var(--white) !important; }
+    .ininsen-table th, .ininsen-table td { background: rgba(248,246,242,0.04) !important; color: var(--white) !important; border: 1px solid var(--line) !important; }
+    .kan-cell, .shi-cell { color: var(--gold) !important; font-size: 26px !important; letter-spacing: 2px !important; }
+    .zoukan-cell { color: var(--white2) !important; font-size: 12px !important; }
+    /* 詳細行(星の解説) */
+    .jintai-detail { margin-top: 16px !important; }
+    .jd-row { padding: 12px 0 !important; border-bottom: 1px solid var(--line) !important; color: var(--white2) !important; font-size: 15px !important; line-height: 1.8 !important; }
+    .jd-label { color: var(--gold) !important; letter-spacing: 2px !important; display: inline-block; margin-right: 8px; font-size: 13px !important; }
+    .jd-row strong { color: var(--white) !important; font-size: 17px !important; letter-spacing: 1px !important; }
+    .kw-honnou { color: var(--white3) !important; font-size: 12px !important; margin-left: 10px; }
+    .kw-strip { color: var(--white2) !important; font-size: 13px !important; display: block; margin-top: 4px; }
+    .jd-story { color: var(--white) !important; background: rgba(200,169,110,0.06) !important; border-left: 2px solid var(--gold) !important; padding: 10px 14px !important; margin-top: 8px !important; font-size: 14.5px !important; line-height: 1.9 !important; border-radius: 3px !important; }
+    /* 入力フォーム */
+    .input-group { margin-bottom: 16px !important; }
+    .input-label { color: var(--white2) !important; font-size: 14px !important; letter-spacing: 1px !important; margin-bottom: 8px !important; display: block; }
+    input.input, select.input, input[type="text"], input[type="number"] {
+      background: rgba(248,246,242,0.05) !important;
+      color: var(--white) !important;
+      border: 1px solid var(--line) !important;
+      font-size: 18px !important;
+      padding: 12px 10px !important;
+      border-radius: 3px !important;
+      font-family: inherit !important;
+    }
+    input.input:focus, select.input:focus { outline: none !important; border-color: var(--gold) !important; }
+    button.btn {
+      background: transparent !important;
+      color: var(--gold) !important;
+      border: 1px solid var(--gold2) !important;
+      padding: 16px !important;
+      font-size: 16px !important;
+      letter-spacing: 4px !important;
+      font-weight: 300 !important;
+      font-family: inherit !important;
+      border-radius: 3px !important;
+      width: 100% !important;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+    button.btn:hover, button.btn:active { border-color: var(--gold) !important; color: var(--white) !important; }
+    .sex-toggle button { background: transparent !important; color: var(--white3) !important; border: 1px solid var(--line) !important; }
+    .sex-toggle button.active { color: var(--gold) !important; border-color: var(--gold) !important; background: rgba(200,169,110,0.08) !important; }
+    .error { color: #f09090 !important; }
+    /* 五行の意味解説(gogyou-comment内) */
+    #gogyou-comment { color: var(--white2) !important; font-size: 14px !important; line-height: 1.85 !important; }
+    #gogyou-comment strong { font-size: 15px; }
+    /* CTA */
+    .cta-body { font-size: 14px !important; line-height: 2 !important; color: var(--white2) !important; }
+    .cta-title { font-size: 17px !important; }
+    .cta-button { font-size: 15px !important; padding: 18px !important; letter-spacing: 5px !important; }
+    /* 日干支の本質(nikkanshi-reading) */
+    #nikkanshi-reading { color: var(--white2) !important; font-size: 14px !important; line-height: 1.9 !important; }
+    #nikkanshi-reading strong { color: var(--gold) !important; }
+    .nkkanshi-head { color: var(--gold) !important; font-size: 16px !important; letter-spacing: 2px !important; }
+    .nkkanshi-name { color: var(--white) !important; }
+    .nkkanshi-alt { color: var(--white3) !important; }
+    .nkkanshi-meta { background: rgba(200,169,110,0.06) !important; color: var(--white3) !important; font-size: 12px !important; padding: 8px 10px !important; }
+    .nkkanshi-line { color: var(--white2) !important; font-size: 13.5px !important; margin: 6px 0 !important; line-height: 1.9 !important; }
+    .nkkanshi-line strong { color: var(--gold) !important; }
+    .nkkanshi-paragraph { color: var(--white2) !important; font-size: 13.5px !important; line-height: 1.9 !important; }
+    .tag { background: rgba(200,169,110,0.1) !important; color: var(--white2) !important; border: 1px solid var(--gold2) !important; }
+
+    /* ヘッダ部分の陰陽マーク */
+    .yy-wrap{width:52px;height:52px;position:relative;margin:0 auto 20px;}
+    .yy{width:52px;height:52px;border-radius:50%;background:linear-gradient(to right,var(--white) 50%,var(--bg2) 50%);border:1px solid rgba(200,169,110,0.3);position:relative;animation:spin 24s linear infinite;}
+    .yy::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:26px;height:26px;border-radius:50%;background:var(--white);}
+    .yy::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:26px;height:26px;border-radius:50%;background:var(--bg2);}
+    .yy-dot-w{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:var(--bg2);z-index:2;}
+    .yy-dot-b{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:var(--white);z-index:2;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .hd-tag{font-size:12px;letter-spacing:5px;color:var(--white3);text-align:center;margin-bottom:20px;}
+
+    /* スマホ最適化 */
+    @media (max-width: 480px) {
+      .container { max-width: 100% !important; }
+      .card { padding: 18px 16px !important; margin-bottom: 12px !important; }
+      body { padding: 0 !important; font-size: 15px !important; }
+      .section-title { font-size: 13px !important; }
+      .jd-row strong { font-size: 16px !important; }
+      .jd-story { font-size: 14px !important; }
+      .gogyou-cell { padding: 10px 4px !important; }
+      .gogyou-value { font-size: 20px !important; }
+      .kan-cell, .shi-cell { font-size: 22px !important; }
+      .tenchu-value { font-size: 18px !important; }
+      .cta-body { font-size: 13.5px !important; }
+      .cta-button { padding: 16px !important; font-size: 14px !important; letter-spacing: 3px !important; }
+      .header h1 { font-size: 17px !important; }
+    }
   </style>
 </head>
 <body>
@@ -511,8 +639,12 @@
 
     <!-- 入力カード -->
     <div class="card">
-      <div class="header">
-        <h1 class="title-jp">あなたが その魂 命に宿したエネルギーを知る</h1>
+      <div class="header" style="text-align:center; padding: 32px 20px 24px; border-bottom:1px solid var(--line);">
+        <div class="hd-tag">NANAFUSHI OCCULT</div>
+        <div class="yy-wrap"><div class="yy"><div class="yy-dot-w"></div><div class="yy-dot-b"></div></div></div>
+        <h1 class="title-jp" style="font-size:20px; font-weight:300; letter-spacing:3px; color:var(--white); line-height:1.7;">
+          あなたが その魂に <em style="color:var(--gold);font-style:normal;">宿した</em><br>命のエネルギー
+        </h1>
       </div>
       <div class="input-group">
         <input type="text" class="name-input" id="name" placeholder="お名前">
@@ -1669,7 +1801,8 @@
             if (!d) return "";
             var storyText = period==="初年運" ? (d.storyShonen||d.shonen) : (period==="中年運" ? (d.storyChunen||d.chunen) : (d.storyBannen||d.bannen));
             var storyHtml = storyText ? ("<div class='jd-story'>"+storyText+"</div>") : "";
-            return "<div class='jd-row'><span class='jd-label'>"+label+"</span><strong>"+star+"</strong><span class='kw-honnou'>エネルギー"+d.energy+" ／ "+d.world+"の時期</span>"+storyHtml+"</div>";
+            var worldTag = d.world ? ("<span class='kw-honnou'>エネルギー "+d.energy+" ／ "+d.essence+"</span>") : "";
+            return "<div class='jd-row'><span class='jd-label'>"+label+"</span><strong>"+star+"</strong>"+worldTag+storyHtml+"</div>";
           }
           jdetail.innerHTML =
             joushouLine("中心", centerStar) +
