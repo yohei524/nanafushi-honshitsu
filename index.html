@@ -182,6 +182,72 @@
       transition: border-color .2s, color .2s;
     }
     .cta-button:hover { border-color: var(--gold); color: var(--white); }
+
+    /* 奥へ誘うリード文ブロック */
+    .cta-lead-block {
+      margin: 24px 0 20px;
+      text-align: center;
+    }
+    .cta-lead-line {
+      color: var(--white2);
+      font-size: 14px;
+      line-height: 2;
+      letter-spacing: 2px;
+      font-weight: 300;
+    }
+    /* 㐂占入口:扉ボタン(金色・目立つ) */
+    .cta-door {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(160deg, #c8a96e 0%, #b8965a 100%);
+      color: #001428;
+      padding: 24px 20px;
+      border-radius: 4px;
+      border: 1px solid #d8bd88;
+      text-decoration: none;
+      margin: 8px 0 12px;
+      box-shadow: 0 4px 16px rgba(200,169,110,0.35);
+      transition: transform .25s ease, box-shadow .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-door::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 50%;
+      width: 1px; height: 100%;
+      background: rgba(0,20,40,0.25);
+      transform: translateX(-50%);
+      transition: width .3s ease;
+    }
+    .cta-door:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(200,169,110,0.5);
+    }
+    .cta-door:hover::before { width: 3px; }
+    .cta-door-mark {
+      font-size: 26px;
+      letter-spacing: 4px;
+      opacity: 0.7;
+      line-height: 1;
+    }
+    .cta-door-label {
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: 8px;
+      text-indent: 8px;
+    }
+    .cta-door-note {
+      color: var(--white3);
+      font-size: 12px;
+      text-align: center;
+      letter-spacing: 1px;
+      line-height: 1.8;
+      margin-top: 4px;
+    }
     .cta-item-sample-link {
       display: inline-block;
       margin-top: 6px;
@@ -889,90 +955,26 @@
         <div class="reading" id="gogyou-comment" style="margin-top:10px;"></div>
       </div>
 
-      <!-- もっと詳しく知りたい方へ:有料鑑定誘導CTA -->
+      <!-- 奥座敷への扉:有料鑑定誘導CTA(干支タイプ別) -->
       <div class="card cta-card">
         <div class="cta-title" id="cta-hook-title">運気生活を始めたい方へ</div>
         <p class="cta-body" id="cta-hook-body">
           この「㐂の暦」で出るのは、あなたの<strong>素材データ</strong>です。<br>
           本当の面白さは「<strong>これをどう日々に活かすか</strong>」から始まります。
         </p>
-        <p class="cta-body cta-lead">
-          占い師に鑑定してもらったことがない方も多いので<br>
-          <strong>「相場」と比べて</strong>説明します。
-        </p>
 
-        <div class="cta-item">
-          <div class="cta-item-title">📜 命式の深い読み解き(10,000〜15,000字)</div>
-          <div class="cta-item-body">
-            大学の卒業論文が約15,000字。<br>
-            あなた1人のための<strong>卒論級レポート</strong>です。
-          </div>
-          <div class="cta-item-note">
-            ※ 一般的な鑑定文は2,000〜3,000字が普通<br>
-            この時点で<strong>相場の5倍のボリューム</strong>
-          </div>
+        <div class="cta-lead-block" id="cta-lead-block">
+          <p class="cta-lead-line" id="cta-lead-line">
+            ここから先は、あなた一人のための時間。
+          </p>
         </div>
 
-        <div class="cta-item">
-          <div class="cta-item-title">📅 kichi-dashboard(あなた専用ページ)</div>
-          <div class="cta-item-body">
-            宿命と運気を見える化した、あなただけのWebページ。<br>
-            <strong>毎日見て陰陽五行のエネルギーを補完</strong>できるように㐂自身が作成。<br>
-            「今日は動くな」「来週から追い風」が一目で分かる運気カレンダー(閲覧2ヶ月)。
-          </div>
-          <div class="cta-item-note">
-            ※ こういう専用ページを作る占い師はほぼいません<br>
-            (価格比較はできませんが、1万円ではどの占い師もやらないでしょう…)
-          </div>
-          <a href="https://kichi-dashboard.vercel.app/demo" target="_blank" rel="noopener" class="cta-item-sample-link">▶ 実際のページを見てみる(サンプル)</a>
-        </div>
-
-        <div class="cta-item">
-          <div class="cta-item-title">🎥 Zoom鑑定 2時間</div>
-          <div class="cta-item-body">
-            命式を一緒に読み解きながら、あなたの人生に響く言葉に翻訳。<br>
-            顔出しは任意・声だけ参加OK。
-          </div>
-          <div class="cta-item-note">
-            ※ 電話占いの相場は<strong>1分300円</strong><br>
-            2時間だとそれだけで<strong>36,000円</strong><br>
-            (高額な占い師なら1分1,000円=12万円)<br>
-            人によっては3時間かかることも、同じ値段で対応しています
-          </div>
-        </div>
-
-        <div class="cta-item">
-          <div class="cta-item-title">💬 LINEサポート(1ヶ月間)</div>
-          <div class="cta-item-body">
-            鑑定後の疑問や日々の小さな相談に対応。<br>
-            「転職の今のタイミングは?」「この人との相性どうですか?」等、気軽に送れます。
-          </div>
-          <div class="cta-item-note">
-            ※ 他の占い師さんはLINEサポート単体で<br>
-            <strong>月10,000円が相場</strong><br>
-            紡の席にはこれが標準で含まれます
-          </div>
-        </div>
-
-        <div class="cta-summary">
-          <div class="cta-summary-title">★ 紡の席  ¥30,000</div>
-          <div class="cta-summary-body">
-            相場で買い揃えると<br>
-            Zoom2時間だけで36,000円<br>
-            LINEサポート1ヶ月で10,000円<br>
-            卒論級のレポートは相場を超える価値<br><br>
-            合わせて<strong>7〜10万円になる内容</strong>を、<br>
-            「本気で向き合える人数だけに届けたい」という理由で<br>
-            <strong>30,000円</strong>に抑えています。
-          </div>
-        </div>
-
-        <a href="https://sensenkyokyo.stores.jp/" target="_blank" rel="noopener" class="cta-button">
-          ▶ 鑑定を申し込む(㐂のstores)
+        <a href="https://line.me/R/ti/p/%40917mygfd" target="_blank" rel="noopener" class="cta-door" id="cta-door">
+          <span class="cta-door-mark">▚</span>
+          <span class="cta-door-label">㐂占入口</span>
         </a>
-        <p class="cta-note">
-          ※鑑定は1件ずつ手作業で書いています<br>
-          ※返金は10%の決済手数料を差し引いた90%となります
+        <p class="cta-door-note" id="cta-door-note">
+          扉の奥で、㐂が直接あなたの命式を読み解きます
         </p>
       </div>
 
@@ -2377,14 +2379,34 @@
           }
         }
 
-        // 日干支に合わせてCTAを差し替え
+        // 日干支・タイプに合わせてCTA(扉)を差し替え
         (function(){
           var nd = nikkanshi ? NIKKANSHI_DETAIL[nikkanshi] : null;
+          var typeKey = (nikkanshi && KANSHI_TYPE[nikkanshi]) ? KANSHI_TYPE[nikkanshi] : "A";
+          var tp = CTA_TYPE[typeKey];
+
           var hookTitle = document.getElementById('cta-hook-title');
-          var hookBody = document.getElementById('cta-hook-body');
-          if (nd && nd.cta && hookTitle && hookBody) {
-            hookTitle.textContent = nd.name + " のあなたへ";
-            hookBody.innerHTML = nd.cta;
+          var hookBody  = document.getElementById('cta-hook-body');
+          var leadLine  = document.getElementById('cta-lead-line');
+          var doorLabel = document.querySelector('#cta-door .cta-door-label');
+          var doorNote  = document.getElementById('cta-door-note');
+          var doorLink  = document.getElementById('cta-door');
+
+          // 見出し:干支の一言名
+          if (nd && hookTitle) hookTitle.textContent = nd.name + " のあなたへ";
+          // 本文:干支別の刺さる一言(60通り)
+          if (nd && nd.cta && hookBody) hookBody.innerHTML = nd.cta;
+
+          // タイプ別の奥へ誘うリード文・扉ノート
+          if (tp) {
+            if (leadLine) leadLine.innerHTML = tp.lead;
+            if (doorLabel) doorLabel.textContent = tp.doorLabel;
+            if (doorNote) doorNote.innerHTML = tp.doorNote;
+            // 定型文付きトークリンク(hossoiossan 㐂の占)
+            if (doorLink) {
+              var msg = tp.msg.replace("{name}", (nd ? nd.name : "この命式"));
+              doorLink.href = "https://line.me/R/oaMessage/%40917mygfd/?" + encodeURIComponent(msg);
+            }
           }
         })();
         resultEl.style.display = 'block';
@@ -2935,6 +2957,49 @@
         alt:"墨水(ぼくすい)",
         fullText:"癸亥は雨が主役。大雨のパワーがあり、しかも冬の激流の川の流れの上に降っている大雨。ですから前が見えないことのたとえから墨水と呼ばれていて、心の中がわからない人・自己表現をしない人ということになる。本人はしているつもり、言っているつもり。\n\n墨水の人にとっては自分も墨水の向こう側にいる人の心はわからないし、周りから見ても墨水の人の心はわからない。墨水の心が見抜ける代表格は水火既済の丙子・丁亥・壬午・癸巳のみ。改良方法は、自分が思っている以上に言うこと。良さが伝わっていないから。\n\n陰水の強水・冬水、冬の雨の形状であり冷雨で万物静まり隠すゆえに『隠れた大人(たいじん)』と云う。",
         cta:"最も深い神秘の中に眠る、あなたの真の役目を静かに紐解く時間を作りませんか。"
+      }
+    };
+
+    // ========================================
+    // 60干支 → 訴求タイプ(A/B/C/D)
+    // A=実利堅実(相場比較OK) B=品格本物(値引き逆効果) C=自我売り込み嫌い(引き) D=情大切な人中心
+    // ========================================
+    var KANSHI_TYPE = {
+      "甲子":"A","乙丑":"A","丙寅":"A","己巳":"A","乙未":"A","己丑":"A","甲午":"A","丁未":"A","己酉":"A","壬戌":"A",
+      "辛酉":"B","辛未":"B","癸酉":"B","戊辰":"B","辛巳":"B","庚辰":"B","壬辰":"B","戊戌":"B","庚戌":"B","辛丑":"B","辛卯":"B","辛亥":"B","丙午":"B","戊午":"B",
+      "甲寅":"C","戊寅":"C","庚寅":"C","甲辰":"C","甲戌":"C","丙戌":"C","庚申":"C","甲申":"C","乙酉":"C","丁酉":"C","乙卯":"C","丙辰":"C","戊子":"C","壬寅":"C",
+      "丁卯":"D","己卯":"D","己亥":"D","乙亥":"D","丁亥":"D","癸未":"D","癸卯":"D","乙巳":"D","丁巳":"D","己未":"D","癸巳":"D","癸丑":"D","癸亥":"D","庚午":"D","庚子":"D","丙子":"D","丁丑":"D","丙申":"D","壬午":"D","壬子":"D","戊申":"D","壬申":"D"
+    };
+
+    // タイプ別:奥へ誘うリード文・扉文言・定型メッセージ
+    var CTA_TYPE = {
+      // A:実利・堅実(損得と納得で動く。堅実さに敬意を払う)
+      "A":{
+        lead:"ここで出た素材を<br>どう日々に活かすか。<br>その先を、㐂と一緒に組み立てませんか。",
+        doorLabel:"㐂占入口",
+        doorNote:"扉の奥で、あなたの命式を無駄なく読み解きます",
+        msg:"本質鑑定を見ました。㐂占の奥へ進みたいです。"
+      },
+      // B:品格・本物(値引き厳禁。特別感・本物・希少で。価格は出さない)
+      "B":{
+        lead:"これは、安いから選ぶものではありません。<br>あなたという命式を、一人の手で<br>本物の深さで読み解く場所です。",
+        doorLabel:"㐂占入口",
+        doorNote:"同じものは二度作りません。本気の方だけ、どうぞ",
+        msg:"本質鑑定を見ました。この命式を、本気で読み解いてほしいです。"
+      },
+      // C:自我・売り込み嫌い(引きの姿勢。決めるのは本人)
+      "C":{
+        lead:"勧めるつもりはありません。<br>㐂がやるのは、あなたが自分で決めるための<br>材料を全部そろえることだけ。",
+        doorLabel:"㐂占入口",
+        doorNote:"どう動くかは、あなたが決める。必要な時だけ扉を",
+        msg:"本質鑑定を見ました。もう少し詳しく知りたいので、話を聞かせてください。"
+      },
+      // D:情・大切な人中心(あなたと大切な人のために)
+      "D":{
+        lead:"この鑑定は、あなた一人のためだけじゃない。<br>あなたが自分らしく動けることが<br>大切な人の安心にもつながります。",
+        doorLabel:"㐂占入口",
+        doorNote:"扉の奥で、あなたが自分らしく動ける流れを整えます",
+        msg:"本質鑑定を見ました。㐂占の奥へ進みたいです。"
       }
     };
 
