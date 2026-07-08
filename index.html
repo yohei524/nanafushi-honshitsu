@@ -969,7 +969,7 @@
           </p>
         </div>
 
-        <a href="https://line.me/R/ti/p/%40917mygfd" target="_blank" rel="noopener" class="cta-door" id="cta-door">
+        <a href="https://sensenkyokyo.stores.jp/" target="_blank" rel="noopener" class="cta-door" id="cta-door">
           <span class="cta-door-mark">▚</span>
           <span class="cta-door-label">㐂占入口</span>
         </a>
@@ -2402,10 +2402,9 @@
             if (leadLine) leadLine.innerHTML = tp.lead;
             if (doorLabel) doorLabel.textContent = tp.doorLabel;
             if (doorNote) doorNote.innerHTML = tp.doorNote;
-            // 定型文付きトークリンク(hossoiossan 㐂の占)
+            // 扉の先はstores(紡の席)へ直行
             if (doorLink) {
-              var msg = tp.msg.replace("{name}", (nd ? nd.name : "この命式"));
-              doorLink.href = "https://line.me/R/oaMessage/%40917mygfd/?" + encodeURIComponent(msg);
+              doorLink.href = "https://sensenkyokyo.stores.jp/";
             }
           }
         })();
