@@ -357,6 +357,35 @@
       padding-top: 4px;
     }
 
+    /* 干支をもっと詳しく(開閉式) */
+    .nkkanshi-more {
+      margin-top: 14px;
+      border-top: 1px solid rgba(200,169,110,0.25);
+      padding-top: 10px;
+    }
+    .nkkanshi-more > summary {
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      list-style: none;
+      padding: 6px 0;
+      user-select: none;
+      transition: color .2s;
+    }
+    .nkkanshi-more > summary::-webkit-details-marker { display: none; }
+    .nkkanshi-more > summary::before {
+      content: "＋ ";
+      color: var(--gold2);
+    }
+    .nkkanshi-more[open] > summary::before { content: "－ "; }
+    .nkkanshi-more > summary:hover { color: var(--white); }
+    .nkkanshi-more-body {
+      padding-top: 8px;
+      animation: fadeIn .4s ease;
+    }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
     /* === 開いた状態 === */
     .cta-door.is-open .door-left  { transform: perspective(600px) rotateY(-105deg); }
     .cta-door.is-open .door-right { transform: perspective(600px) rotateY(105deg); }
@@ -2076,22 +2105,27 @@
               if (!text) return "";
               return "<div class='nkkanshi-line'><strong>"+label+"</strong>："+text.replace(/\n/g,"<br>")+"</div>";
             }
-            var bodyHtml = "";
-            bodyHtml += para("警句", detail.warning);
-            bodyHtml += para("本質", detail.essence);
-            bodyHtml += para("性格詳細", detail.personality);
-            bodyHtml += para("男女別", detail.detail);
-            bodyHtml += para("改良条件", detail.improve);
-            // 旧スキーマ(fullText/tags)も保持して表示
+            // 陰占直下は「本質(essence)」だけを軽く出す。
+            // 警句(=陰転の姿・辛辣)は削除。陽転/陰転カードに役割を譲る。
+            var leadHtml = para("本質", detail.essence);
+
+            // 詳細(性格詳細・男女別・改良・原典)は開閉式に畳む(初見に出しすぎない)
+            var moreHtml = "";
+            moreHtml += para("性格詳細", detail.personality);
+            moreHtml += para("男女別", detail.detail);
+            moreHtml += para("活かし方", detail.improve);
             if (detail.fullText) {
-              bodyHtml += detail.fullText.split(/\n\n+/).map(function(p){
+              moreHtml += detail.fullText.split(/\n\n+/).map(function(p){
                 return "<p class='nkkanshi-paragraph'>"+p.replace(/\n/g,"<br>")+"</p>";
               }).join("");
             }
             if (detail.tags) {
-              bodyHtml += "<div class='tag-row'>"+detail.tags.map(function(t){return "<span class='tag'>"+t+"</span>";}).join("")+"</div>";
+              moreHtml += "<div class='tag-row'>"+detail.tags.map(function(t){return "<span class='tag'>"+t+"</span>";}).join("")+"</div>";
             }
-            nkReadEl.innerHTML = headHtml + metaHtml + bodyHtml;
+            var detailsBlock = moreHtml
+              ? ("<details class='nkkanshi-more'><summary>この干支をもっと詳しく見る</summary><div class='nkkanshi-more-body'>"+moreHtml+"</div></details>")
+              : "";
+            nkReadEl.innerHTML = headHtml + metaHtml + leadHtml + detailsBlock;
           } else {
             nkReadEl.innerHTML = "<strong>"+nkKey+"</strong><div style='font-size:11px;color:#999;margin-top:4px;'>※詳細データ未登録</div>";
           }
