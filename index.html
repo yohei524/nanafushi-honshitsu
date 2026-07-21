@@ -1063,8 +1063,8 @@
         <div id="jintai-detail" class="jintai-detail"></div>
       </div>
 
-      <!-- 天中殺 -->
-      <div class="card">
+      <!-- 天中殺（天中殺チェッカーと重複するため非表示・260710） -->
+      <div class="card" style="display:none;">
         <div class="section-title">天中殺</div>
         <div class="tenchu-box">
           <div class="tenchu-label">あなたの天中殺</div>
@@ -1130,6 +1130,10 @@
           同じ命のエネルギーが 陽にも陰にも出る<br>
           今のあなたは どちらに傾いていますか
         </p>
+        <p class="honshitsu-bridge" id="honshitsu-bridge2" style="margin-top:10px;">
+          陰に傾いてても大丈夫です<br>
+          陽に転じる動き方は 命式ごとにちゃんとあります
+        </p>
       </div>
 
       <!-- 奥座敷への扉:有料鑑定誘導CTA(干支タイプ別) -->
@@ -1137,7 +1141,7 @@
         <div class="cta-title" id="cta-hook-title">運気生活を始めたい方へ</div>
         <p class="cta-body" id="cta-hook-body">
           この「㐂の暦」で出るのは、あなたの<strong>素材データ</strong>です。<br>
-          本当の面白さは「<strong>これをどう日々に活かすか</strong>」から始まります。
+          陽に転じる<strong>動き方</strong>は、一人ひとり違います。
         </p>
 
         <div class="cta-lead-block" id="cta-lead-block">
@@ -1146,7 +1150,7 @@
           </p>
         </div>
 
-        <a href="https://sensenkyokyo.stores.jp/" target="_blank" rel="noopener" class="cta-door" id="cta-door" onclick="return openDoor(event);">
+        <a href="https://liff.line.me/2010777376-yOyXyHAi?formId=921118e5-e7eb-44ac-bd26-bdaadd3a64cb" target="_blank" rel="noopener" class="cta-door" id="cta-door" onclick="return openDoor(event);">
           <span class="door-glow"></span>
           <span class="door-panel door-left">
             <span class="door-knob"></span>
@@ -1166,7 +1170,7 @@
 
   <script>
     // ========================================
-    // 扉を開くアニメーション → stores遷移
+    // 扉を開くアニメーション → 無料鑑定フォーム遷移
     // ========================================
     function openDoor(ev){
       var door = document.getElementById('cta-door');
@@ -1174,7 +1178,7 @@
       if (door.classList.contains('is-open')) return true; // 二度押し時はそのまま遷移
       ev.preventDefault();
       door.classList.add('is-open');
-      var url = door.getAttribute('href') || 'https://sensenkyokyo.stores.jp/';
+      var url = door.getAttribute('href') || 'https://liff.line.me/2010777376-yOyXyHAi?formId=921118e5-e7eb-44ac-bd26-bdaadd3a64cb';
       setTimeout(function(){
         window.open(url, '_blank', 'noopener');
       }, 850);
@@ -2145,51 +2149,22 @@
         document.getElementById('cell-meshita').textContent = southStar || "-";
         document.getElementById('cell-chunen').textContent = (chestJ || "-");
 
-        // 人体図の下に各セルの詳細を展開
+        // 人体図の下の詳細解説は本鑑定に回すため非表示(一言のみ・260710短縮)
         var jdetail = document.getElementById('jintai-detail');
         if (jdetail) {
-          function joushouLine(label, star, posKey) {
-            if (!star) return "";
-            var d = JOUSHOU_DETAIL[star];
-            if (!d) return "";
-            var storyText = (posKey && d["story_"+posKey]) ? d["story_"+posKey] : d.story;
-            var storyHtml = storyText ? ("<div class='jd-story'>"+storyText+"</div>") : "";
-            return "<div class='jd-row'><span class='jd-label'>"+label+"</span><strong>"+star+"</strong><span class='kw-honnou'>"+d.honnou+"</span><span class='kw-strip'>"+d.keywords.join("・")+"</span>"+storyHtml+"</div>";
-          }
-          function jushouLine(label, star, period) {
-            if (!star) return "";
-            var key = star;
-            var d = JUSHOU_DETAIL[key];
-            if (!d) return "";
-            var storyText = period==="初年運" ? (d.storyShonen||d.shonen) : (period==="中年運" ? (d.storyChunen||d.chunen) : (d.storyBannen||d.bannen));
-            var storyHtml = storyText ? ("<div class='jd-story'>"+storyText+"</div>") : "";
-            var worldTag = d.world ? ("<span class='kw-honnou'>エネルギー "+d.energy+" ／ "+d.essence+"</span>") : "";
-            return "<div class='jd-row'><span class='jd-label'>"+label+"</span><strong>"+star+"</strong>"+worldTag+storyHtml+"</div>";
-          }
-          jdetail.innerHTML =
-            joushouLine("中心", centerStar, "center") +
-            joushouLine("目上", northStar, "north") +
-            joushouLine("社会", eastStar, "east") +
-            joushouLine("目下", southStar, "south") +
-            joushouLine("配偶者", westStar, "west") +
-            joushouLine("伴星", hanseiStar) +
-            jushouLine("初年運", headJ, "初年運") +
-            jushouLine("中年運", chestJ, "中年運") +
-            jushouLine("晩年運", bellyJ, "晩年運");
+          var d = centerStar ? JOUSHOU_DETAIL[centerStar] : null;
+          jdetail.innerHTML = d ? ("<div class='jd-row'><span class='jd-label'>中心</span><strong>"+centerStar+"</strong><span class='kw-honnou'>"+d.honnou+"</span></div>") : "";
         }
 
         var direction = TENCHU_DIRECTION[tenchuKey] || "";
         document.getElementById('res-tenchu').textContent = tenchuData.name + (direction ? "（"+direction+"天中殺）" : "");
         document.getElementById('res-tenchu-desc').textContent = tenchuData.desc;
 
-        // 天中殺の詳細（本質・家系・改良）
+        // 天中殺の詳細は一言のみ(本鑑定に回すため260710短縮)
         var tdetail = TENCHU_DETAIL[tenchuKey];
         var tdEl = document.getElementById('tenchu-detail');
         if (tdEl && tdetail) {
-          tdEl.innerHTML =
-            "<div><strong>本質</strong>："+tdetail.essence+"</div>"+
-            "<div style='margin-top:4px;'><strong>家系の繋がり</strong>："+tdetail.family+"</div>"+
-            "<div style='margin-top:4px;'><strong>陽転条件</strong>："+tdetail.improve+"</div>";
+          tdEl.innerHTML = "<div><strong>本質</strong>："+tdetail.essence+"</div>";
         }
 
         // 直近の年・月・日天中殺の期間を算出
@@ -2226,9 +2201,7 @@
             }
           }
           tpEl.innerHTML =
-            "<strong>直近の年天中殺</strong>："+(yearTenchuStart? yearTenchuStart+"年〜"+yearTenchuEnd+"年" : "—")+
-            "<br><strong>直近の月天中殺</strong>："+(monthTenchuStart? monthTenchuStart+"月〜"+monthTenchuEnd+"月" : "—")+
-            "<div style='font-size:11px;color:#7a6a4a;margin-top:4px;'>※日天中殺は月運表に「日天中殺」フラグで表示</div>";
+            "<strong>直近の年天中殺</strong>："+(yearTenchuStart? yearTenchuStart+"年〜"+yearTenchuEnd+"年" : "—");
         }
 
         var shBox = document.getElementById('shukumei-box');
@@ -2260,18 +2233,10 @@
         document.getElementById('suuri-kon').textContent = suuri.gogyouTotal.金;
         document.getElementById('suuri-sui').textContent = suuri.gogyouTotal.水;
         document.getElementById('suuri-total').textContent = suuri.grandTotal;
-        // 五行のバランスコメント+各五行の意味を追加表示
+        // 五行バランスは一言のみ(本鑑定に回すため260710短縮)
         var gogyouCommentEl = document.getElementById('gogyou-comment');
         if (gogyouCommentEl) {
-          var meaningHtml = '<div style="margin-top:8px;font-size:12px;line-height:1.75;">';
-          ['木','火','土','金','水'].forEach(function(g){
-            var count = gogyou[g] || 0;
-            var meaning = GOGYOU_MEANING[g] || '';
-            var strength = count>=3 ? '<strong style="color:#a83a2c;">(多め)</strong>' : (count===0 ? '<span style="color:#7a6a4a;">(0=なし)</span>' : '');
-            meaningHtml += '<div style="margin:3px 0;"><strong class="gogyou-'+({木:'moku',火:'ka',土:'do',金:'kon',水:'sui'})[g]+'">'+g+'('+count+')</strong> '+strength+' '+meaning+'</div>';
-          });
-          meaningHtml += '</div>';
-          gogyouCommentEl.innerHTML = '<div>'+gogyouComment+'</div>' + meaningHtml;
+          gogyouCommentEl.innerHTML = '<div>'+gogyouComment+'</div>';
         }
 
         // 数理法エネルギー診断
@@ -2625,9 +2590,9 @@
             if (leadLine) leadLine.innerHTML = tp.lead;
             if (doorLabel) doorLabel.textContent = tp.doorLabel;
             if (doorNote) doorNote.innerHTML = tp.doorNote;
-            // 扉の先はstores(紡の席)へ直行
+            // 扉の先は㐂占鑑定受付ページへ直行
             if (doorLink) {
-              doorLink.href = "https://sensenkyokyo.stores.jp/";
+              doorLink.href = "https://kichi-uranai-lp.vercel.app/";
             }
           }
         })();
