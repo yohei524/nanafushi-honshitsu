@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>㐂の暦・生まれた日の三つ</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#001428;--bg2:#001835;--line:rgba(255,255,255,0.1);--white:#f8f6f2;--white2:rgba(248,246,242,0.72);--white3:rgba(248,246,242,0.42);--gold:#c8a96e;--gold2:rgba(200,169,110,0.5);}
+body{font-family:"Noto Serif JP","YuMincho","Hiragino Mincho ProN",serif;background:var(--bg);color:var(--white);-webkit-font-smoothing:antialiased;font-size:17px;line-height:1.95;}
+.wrap{max-width:480px;margin:0 auto;padding-bottom:48px;}
+.hd{padding:44px 28px 28px;border-bottom:1px solid var(--line);}
+.hd-tag{font-size:13px;letter-spacing:4px;color:var(--white3);margin-bottom:18px;}
+.yy{width:48px;height:48px;border-radius:50%;background:linear-gradient(to right,var(--white) 50%,var(--bg2) 50%);border:1px solid rgba(200,169,110,0.3);position:relative;animation:spin 24s linear infinite;margin-bottom:18px;}
+.yy::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:24px;height:24px;border-radius:50%;background:var(--white);}
+.yy::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:24px;height:24px;border-radius:50%;background:var(--bg2);}
+@keyframes spin{to{transform:rotate(360deg);}}
+@media (prefers-reduced-motion:reduce){.yy{animation:none;}}
+.hd-ttl{font-size:23px;font-weight:300;letter-spacing:2px;line-height:1.6;}
+.hd-ttl em{color:var(--gold);font-style:normal;}
+.hd-lead{font-size:15px;color:var(--white2);margin-top:14px;}
+.form{padding:26px 28px;border-bottom:1px solid var(--line);}
+.lbl{font-size:13px;letter-spacing:3px;color:var(--white3);margin-bottom:8px;}
+.row{display:flex;gap:8px;margin-bottom:18px;}
+.row select{flex:1;min-width:0;}
+select{appearance:none;-webkit-appearance:none;background:var(--bg2);color:var(--white);border:1px solid var(--line);border-radius:4px;padding:12px 10px;font-family:inherit;font-size:16px;}
+.sex{display:flex;gap:8px;margin-bottom:22px;}
+.sex button{flex:1;background:transparent;color:var(--white2);border:1px solid var(--line);border-radius:4px;padding:11px;font-family:inherit;font-size:15px;cursor:pointer;}
+.sex button.on{border-color:var(--gold);color:var(--gold);}
+.go{width:100%;background:var(--gold);color:#1a1205;border:none;border-radius:4px;padding:15px;font-family:inherit;font-size:16px;letter-spacing:3px;cursor:pointer;}
+.go:focus-visible,.sex button:focus-visible,.cta:focus-visible{outline:2px solid var(--white);outline-offset:2px;}
+.safe{font-size:13px;color:var(--white3);margin-top:14px;line-height:1.8;}
+.err{font-size:14px;color:#e8a49a;margin-top:10px;min-height:1em;}
+#result{display:none;}
+.sec{padding:30px 28px;border-bottom:1px solid var(--line);}
+.sec-tag{font-size:12px;letter-spacing:4px;color:var(--white3);margin-bottom:10px;}
+.sec-ttl{font-size:22px;font-weight:300;letter-spacing:2px;margin-bottom:4px;}
+.sec-sub{font-size:15px;color:var(--gold);letter-spacing:1px;margin-bottom:16px;}
+.sec-body{font-size:16px;color:var(--white);}
+.why{margin-top:18px;padding:12px 14px;border-left:2px solid var(--gold2);background:rgba(255,255,255,0.03);font-size:14px;color:var(--white2);line-height:1.85;}
+.why b{color:var(--gold);font-weight:400;}
+.fuse{padding:30px 28px 10px;font-size:16px;color:var(--white2);}
+.fuse b{color:var(--white);font-weight:400;}
+.cta-box{padding:10px 28px 30px;}
+.cta{display:block;text-align:center;text-decoration:none;background:var(--gold);color:#1a1205;border-radius:4px;padding:16px;font-size:16px;letter-spacing:2px;}
+.cta-note{font-size:14px;color:var(--white3);margin-top:12px;line-height:1.8;}
+.more{padding:0 28px;}
+.more a{display:block;color:var(--white2);border:1px solid var(--line);border-radius:4px;padding:13px 14px;margin-top:10px;text-decoration:none;font-size:15px;}
+.again{display:block;margin:26px auto 0;background:none;border:none;color:var(--white3);font-family:inherit;font-size:14px;text-decoration:underline;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hd">
+    <div class="hd-tag">㐂 の 暦</div>
+    <div class="yy" aria-hidden="true"></div>
+    <h1 class="hd-ttl">生まれた日が教える、<br><em>三つのこと</em></h1>
+    <p class="hd-lead">生年月日を入れると、あなたの天中殺・本質・核の三つが出ます。</p>
+  </header>
+
+  <section class="form" id="form">
+    <div class="lbl">生年月日</div>
+    <div class="row">
+      <select id="y" aria-label="年"></select>
+      <select id="m" aria-label="月"></select>
+      <select id="d" aria-label="日"></select>
+    </div>
+    <div class="lbl">性別</div>
+    <div class="sex">
+      <button type="button" id="sx-F" class="on" onclick="setSex('F')">女性</button>
+      <button type="button" id="sx-M" onclick="setSex('M')">男性</button>
+    </div>
+    <button type="button" class="go" onclick="run()">見 る</button>
+    <div class="err" id="err"></div>
+    <p class="safe">生年月日は、この画面の中で計算するだけです。どこにも送られず、保存もされません。</p>
+  </section>
+
+  <div id="result">
+    <section class="sec">
+      <div class="sec-tag">一　天 中 殺</div>
+      <div class="sec-ttl" id="tc-name"></div>
+      <div class="sec-sub" id="tc-sub"></div>
+      <div class="sec-body" id="tc-body"></div>
+      <div class="why"><b>なぜそう読めるのか</b><br>十干は十、十二支は十二。十干がひと回りする十日ごとのまとまりでは、十二支のうち二つが入りきらずに余ります。生まれた日が属するまとまりで余った二つが、あなたの天中殺です。<span id="tc-why"></span></div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-tag">二　本 質</div>
+      <div class="sec-ttl" id="nk-name"></div>
+      <div class="sec-sub" id="nk-sub"></div>
+      <div class="sec-body" id="nk-body"></div>
+      <div class="why"><b>なぜそう読めるのか</b><br>生まれた日の干支の上の一文字（十干）が、その人の生まれ持った気質を表します。あなたは「<span id="nk-why"></span>」。自然の姿にたとえて読みます。</div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-tag">三　核</div>
+      <div class="sec-ttl" id="cs-name"></div>
+      <div class="sec-sub" id="cs-sub"></div>
+      <div class="sec-body" id="cs-body"></div>
+      <div class="why"><b>なぜそう読めるのか</b><br>生まれた月の十二支の中に隠れている干と、あなたの本質（日の十干）との関係から、胸の位置に入る星が決まります。胸の星は、人生の真ん中に置いているものを表します。</div>
+    </section>
+
+    <div class="fuse">ここまでは、生まれ持ったものです。<br><b>この先、いつ何が動くか</b>は、命式の残り（大運・天中殺の時期）に出ています。</div>
+
+    <div class="cta-box" id="cta-box"></div>
+    <div class="more" id="more"></div>
+    <button type="button" class="again" onclick="again()">別の生年月日で見る</button>
+  </div>
+</div>
+
+<script>
+// 本体チェッカー（nanafushi-meishikicker/index.html）から計算部分だけを取り出したもの。261007
+    var STEMS = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+    var BRANCHES = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+
+    // 十干の五行と陰陽
+    var STEM_GOGYOU = {
+      "甲":{g:"木",y:"陽"}, "乙":{g:"木",y:"陰"},
+      "丙":{g:"火",y:"陽"}, "丁":{g:"火",y:"陰"},
+      "戊":{g:"土",y:"陽"}, "己":{g:"土",y:"陰"},
+      "庚":{g:"金",y:"陽"}, "辛":{g:"金",y:"陰"},
+      "壬":{g:"水",y:"陽"}, "癸":{g:"水",y:"陰"}
+    };
+
+    // 蔵干（本気・中気・余気の全部）
+    // 算命学stockルール準拠：節入りからの日数で「本気」を選ぶ
+    // ZOUKAN[支] = [蔵干全部リスト, 余気]
+    var ZOUKAN = {
+      "子":["癸"],
+      "丑":["己","癸","辛"],
+      "寅":["甲","丙","戊"],
+      "卯":["乙"],
+      "辰":["戊","乙","癸"],
+      "巳":["丙","庚","戊"],
+      "午":["丁","己"],
+      "未":["己","丁","乙"],
+      "申":["庚","壬","戊"],
+      "酉":["辛"],
+      "戌":["戊","辛","丁"],
+      "亥":["壬","甲"]
+    };
+
+    // 蔵干選択ルール（節入り日からの経過日数で蔵干を選ぶ）
+    // ZOUKAN_DAYS[支] = [{maxDays, stem}, ...] 余気→中気→本気 の順
+    // maxDays=999 は「最終本気」を表す
+    // 蔵干が1つだけの支(子・卯・酉)は、節入り経過日数に関係なく本気がその1つ(高尾系)
+    var ZOUKAN_DAYS = {
+      "子":[{maxDays:999, stem:"癸"}],
+      "丑":[{maxDays:9, stem:"癸"}, {maxDays:12, stem:"辛"}, {maxDays:999, stem:"己"}],
+      "寅":[{maxDays:7, stem:"戊"}, {maxDays:14, stem:"丙"}, {maxDays:999, stem:"甲"}],
+      "卯":[{maxDays:999, stem:"乙"}],
+      "辰":[{maxDays:9, stem:"乙"}, {maxDays:12, stem:"癸"}, {maxDays:999, stem:"戊"}],
+      "巳":[{maxDays:7, stem:"戊"}, {maxDays:14, stem:"庚"}, {maxDays:999, stem:"丙"}],
+      "午":[{maxDays:10, stem:"丙"}, {maxDays:20, stem:"己"}, {maxDays:999, stem:"丁"}],
+      "未":[{maxDays:9, stem:"丁"}, {maxDays:12, stem:"乙"}, {maxDays:999, stem:"己"}],
+      "申":[{maxDays:7, stem:"戊"}, {maxDays:14, stem:"壬"}, {maxDays:999, stem:"庚"}],
+      "酉":[{maxDays:999, stem:"辛"}],
+      "戌":[{maxDays:9, stem:"辛"}, {maxDays:12, stem:"丁"}, {maxDays:999, stem:"戊"}],
+      "亥":[{maxDays:7, stem:"戊"}, {maxDays:14, stem:"甲"}, {maxDays:999, stem:"壬"}]
+    };
+
+    // 節入り日からの経過日数で蔵干（本気）を取得
+    function getZoukanHonki(branch, daysFromSetsuiri) {
+      var rules = ZOUKAN_DAYS[branch];
+      if (!rules) return null;
+      for (var i=0; i<rules.length; i++) {
+        if (daysFromSetsuiri < rules[i].maxDays) return rules[i].stem;
+      }
+      return rules[rules.length-1].stem;
+    }
+
+    // 十二支の五行
+    var BRANCH_GOGYOU = {
+      "子":"水","丑":"土","寅":"木","卯":"木","辰":"土","巳":"火",
+      "午":"火","未":"土","申":"金","酉":"金","戌":"土","亥":"水"
+    };
+
+    // 天中殺マップ（日干支インデックス0-59 → 天中殺）
+    var TENCHU_DATA = {
+      "戌亥": { name:"戌亥天中殺", desc:"精神性を高める使命", branches:["戌","亥"] },
+      "申酉": { name:"申酉天中殺", desc:"伝統と革新を繋ぐ使命", branches:["申","酉"] },
+      "午未": { name:"午未天中殺", desc:"流れを断ち切る使命", branches:["午","未"] },
+      "辰巳": { name:"辰巳天中殺", desc:"人と違う道を行く使命", branches:["辰","巳"] },
+      "寅卯": { name:"寅卯天中殺", desc:"引き継ぎ・継承の使命", branches:["寅","卯"] },
+      "子丑": { name:"子丑天中殺", desc:"何かを始める使命", branches:["子","丑"] }
+    };
+
+    function getTenchu(dayIdx) {
+      var n = dayIdx + 1;
+      if (n >= 1 && n <= 10) return "戌亥";
+      if (n >= 11 && n <= 20) return "申酉";
+      if (n >= 21 && n <= 30) return "午未";
+      if (n >= 31 && n <= 40) return "辰巳";
+      if (n >= 41 && n <= 50) return "寅卯";
+      if (n >= 51 && n <= 60) return "子丑";
+      return null;
+    }
+
+    // 十大主星算出（日干と相手の干の関係）
+    var JOUSHOU = {
+      "比和": { "陽陽":"貫索星","陰陰":"貫索星","陽陰":"石門星","陰陽":"石門星" },
+      "洩": { "陽陽":"鳳閣星","陰陰":"鳳閣星","陽陰":"調舒星","陰陽":"調舒星" },
+      "剋出": { "陽陽":"禄存星","陰陰":"禄存星","陽陰":"司禄星","陰陽":"司禄星" },
+      "剋入": { "陽陽":"車騎星","陰陰":"車騎星","陽陰":"牽牛星","陰陽":"牽牛星" },
+      "生": { "陽陽":"龍高星","陰陰":"龍高星","陽陰":"玉堂星","陰陽":"玉堂星" }
+    };
+
+    var GOGYOU_REL = {
+      "木":{"木":"比和","火":"洩","土":"剋出","金":"剋入","水":"生"},
+      "火":{"木":"生","火":"比和","土":"洩","金":"剋出","水":"剋入"},
+      "土":{"木":"剋入","火":"生","土":"比和","金":"洩","水":"剋出"},
+      "金":{"木":"剋出","火":"剋入","土":"生","金":"比和","水":"洩"},
+      "水":{"木":"洩","火":"剋出","土":"剋入","金":"生","水":"比和"}
+    };
+
+    function getJoushou(dayStem, targetStem) {
+      if (!targetStem) return null;
+      var dg = STEM_GOGYOU[dayStem];
+      var tg = STEM_GOGYOU[targetStem];
+      if (!dg || !tg) return null;
+      var rel = GOGYOU_REL[dg.g][tg.g];
+      var key = dg.y + tg.y;
+      return JOUSHOU[rel][key];
+    }
+
+    // 十二大従星（十二運 → 算命学十二大従星）
+    // 検証済み（2026/5/21 4サンプル一致）
+    // BRANCHES順 = 子,丑,寅,卯,辰,巳,午,未,申,酉,戌,亥
+
+    // 各日干の十二運（長生・沐浴・冠帯・建禄・帝旺・衰・病・死・墓・絶・胎・養）の地支位置
+    // index = 地支(子=0, 丑=1, ..., 亥=11) → 十二運名
+    var JUNI_UN_TABLE = {
+      "甲":["沐浴","冠帯","建禄","帝旺","衰","病","死","墓","絶","胎","養","長生"], // 長生=亥
+      "乙":["病","衰","帝旺","建禄","冠帯","沐浴","長生","養","胎","絶","墓","死"], // 長生=午
+      "丙":["胎","養","長生","沐浴","冠帯","建禄","帝旺","衰","病","死","墓","絶"], // 長生=寅
+      "丁":["絶","墓","死","病","衰","帝旺","建禄","冠帯","沐浴","長生","養","胎"], // 長生=酉
+      "戊":["胎","養","長生","沐浴","冠帯","建禄","帝旺","衰","病","死","墓","絶"], // 丙と同じ
+      "己":["絶","墓","死","病","衰","帝旺","建禄","冠帯","沐浴","長生","養","胎"], // 丁と同じ
+      "庚":["死","墓","絶","胎","養","長生","沐浴","冠帯","建禄","帝旺","衰","病"], // 長生=巳
+      "辛":["長生","養","胎","絶","墓","死","病","衰","帝旺","建禄","冠帯","沐浴"], // 長生=子
+      "壬":["帝旺","衰","病","死","墓","絶","胎","養","長生","沐浴","冠帯","建禄"], // 長生=申
+      "癸":["建禄","冠帯","沐浴","長生","養","胎","絶","墓","死","病","衰","帝旺"]  // 長生=卯
+    };
+
+    // 十二運 → 算命学十二大従星（検証済み）
+    var JUNIUN_TO_JUSHOU = {
+      "長生":"天貴", "沐浴":"天恍", "冠帯":"天南", "建禄":"天禄",
+      "帝旺":"天将", "衰":"天堂", "病":"天胡", "死":"天極",
+      "墓":"天庫", "絶":"天馳", "胎":"天報", "養":"天印"
+    };
+
+    var JUSHOU_ENERGY = {
+      "天報":3,"天印":6,"天貴":9,"天恍":7,"天南":10,"天禄":11,
+      "天将":12,"天堂":8,"天胡":4,"天極":2,"天庫":5,"天馳":1
+    };
+
+    function getJushou(dayStem, branch) {
+      var bIdx = BRANCHES.indexOf(branch);
+      if (bIdx < 0) return null;
+      var table = JUNI_UN_TABLE[dayStem];
+      if (!table) return null;
+      var juniun = table[bIdx];
+      var jushou = JUNIUN_TO_JUSHOU[juniun];
+      return jushou ? jushou + "星" : null;
+    }
+
+    function getSunLongitude(jd) {
+      var D = jd - 2451545.0;
+      var g = (357.529 + 0.98560028 * D) % 360;
+      var q = (280.459 + 0.98564736 * D) % 360;
+      var L = q + 1.915 * Math.sin(g * Math.PI / 180) + 0.020 * Math.sin(2 * g * Math.PI / 180);
+      return (L % 360 + 360) % 360;
+    }
+
+    function getJD(y, m, d) {
+      if (m <= 2) { y--; m += 12; }
+      var A = Math.floor(y / 100);
+      var B = 2 - A + Math.floor(A / 4);
+      return Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + B - 1524.5;
+    }
+
+    function getZoukanHonki(branch, daysFromSetsuiri) {
+      var rules = ZOUKAN_DAYS[branch];
+      if (!rules) return null;
+      for (var i=0; i<rules.length; i++) {
+        if (daysFromSetsuiri < rules[i].maxDays) return rules[i].stem;
+      }
+      return rules[rules.length-1].stem;
+    }
+
+    function calcKanshiForDate(year, month, day) {
+      var jd = getJD(year, month, day);
+      var baseJD = 2451545;
+      var baseEto = 54;
+      var diff = Math.round(jd - baseJD);
+      var dayIdx = ((baseEto + diff) % 60 + 60) % 60;
+
+      var sunLon = getSunLongitude(jd);
+      var solarTerms = [
+        {d:315,b:2},{d:345,b:3},{d:15,b:4},{d:45,b:5},
+        {d:75,b:6},{d:105,b:7},{d:135,b:8},{d:165,b:9},
+        {d:195,b:10},{d:225,b:11},{d:255,b:0},{d:285,b:1}
+      ];
+      var mBranchIdx = -1;
+      var setsuiriDeg = -1;
+      for (var i=0; i<12; i++) {
+        var cur = solarTerms[i], nxt = solarTerms[(i+1)%12];
+        var match = (cur.d < nxt.d)
+          ? (sunLon >= cur.d && sunLon < nxt.d)
+          : (sunLon >= cur.d || sunLon < nxt.d);
+        if (match) { mBranchIdx = cur.b; setsuiriDeg = cur.d; break; }
+      }
+      var daysFromSetsuiri = Math.floor((sunLon - setsuiriDeg + 360) % 360);
+
+      // 年柱（立春切り替え）
+      var sYear = year;
+      if (month === 1) sYear = year - 1;
+      else if (month === 2 && sunLon >= 270 && sunLon < 315) sYear = year - 1;
+      var yOffset = sYear - 1984;
+      var yIdx = ((yOffset % 60) + 60) % 60;
+      var ykan = STEMS[yIdx % 10], yshi = BRANCHES[yIdx % 12];
+
+      // 月柱
+      var yStem = yIdx % 10;
+      var startMStem = (yStem % 5) * 2 + 2;
+      var mSteps = (mBranchIdx - 2 + 12) % 12;
+      var mStemIdx = (startMStem + mSteps) % 10;
+      var mkan = STEMS[mStemIdx], mshi = BRANCHES[mBranchIdx];
+      var mEtoIdx = -1;
+      for (var k=0; k<60; k++) {
+        if (STEMS[k%10]===mkan && BRANCHES[k%12]===mshi) { mEtoIdx = k; break; }
+      }
+
+      var dkan = STEMS[dayIdx % 10], dshi = BRANCHES[dayIdx % 12];
+
+      // 陽占の星（単体側 calculate() と同じ算出式・相性でも使う）
+      // 中心=月支蔵干本気 / 北=年干 / 南=月干 / 西=日支蔵干本気 / 東=年支蔵干本気
+      var yshiHonki = getZoukanHonki(yshi, daysFromSetsuiri);
+      var mshiHonki = getZoukanHonki(mshi, daysFromSetsuiri);
+      var dshiHonki = getZoukanHonki(dshi, daysFromSetsuiri);
+      var centerStar = getJoushou(dkan, mshiHonki);
+      var northStar  = getJoushou(dkan, ykan);   // 目上・親に向ける星
+      var southStar  = getJoushou(dkan, mkan);   // 目下・子に向ける星
+      var westStar   = getJoushou(dkan, dshiHonki); // 配偶者
+      var eastStar   = getJoushou(dkan, yshiHonki); // 社会・恋愛
+      // 十二大従星：頭=年支(初年運) / 胸=月支(中年運) / 腹=日支(晩年運)
+      var headJushou  = getJushou(dkan, yshi);
+      var chestJushou = getJushou(dkan, mshi);
+      var bellyJushou = getJushou(dkan, dshi);
+
+      return {
+        jd: jd, yIdx: yIdx, ykan: ykan, yshi: yshi,
+        mEtoIdx: mEtoIdx, mkan: mkan, mshi: mshi,
+        dayIdx: dayIdx, dkan: dkan, dshi: dshi,
+        daysFromSetsuiri: daysFromSetsuiri,
+        centerStar: centerStar, northStar: northStar, southStar: southStar,
+        westStar: westStar, eastStar: eastStar,
+        headJushou: headJushou, chestJushou: chestJushou, bellyJushou: bellyJushou
+      };
+    }
+
+// ===== ここから、このページの表示 =====
+var LINE_ID = '%40917mygfd';                 // 㐂の占（占いLINE）のベーシックID（@は%40）
+var LINE_ADD = 'https://lin.ee/5UculYv';      // 占いLINEの友だち追加
+var FROM = (new URLSearchParams(location.search).get('from') || '').toLowerCase();  // hon＝本体LINEから
+var sex = 'F', last = null;
+
+var TC = {
+  '子丑':{sub:'何かを始める使命', body:'家系の中で、新しい流れを作る役を持って生まれています。誰かが用意した道を引き継ぐより、自分で始めたことの方が育ちやすい。目上の助けを当てにしない分、自分の足で立つ強さがあります。'},
+  '寅卯':{sub:'受け継いで育てる使命', body:'誰かが作ったものを受け取り、育てて、次に渡す役を持っています。ゼロから一人で立ち上げるより、受け継いだものを大きくする方で力が出ます。忙しく動いていても、心のどこかで静かな暮らしに憧れている人が多いです。'},
+  '辰巳':{sub:'人と違う道を行く使命', body:'枠からはみ出して、自分の道を切り開く役を持っています。早く親元を離れるほど流れに乗りやすく、人と同じことをするより、人と違うことをした時に力が出ます。浮き沈みの大きさも、その道の一部です。'},
+  '午未':{sub:'流れを断ち切る使命', body:'家系の締めくくり、まとめ役を持って生まれています。古い流れや滞った流れを断ち切り、後始末をつける時に力が出ます。冷静に見えて、実は繊細な人が多いです。'},
+  '申酉':{sub:'伝統と新しさを繋ぐ使命', body:'受け継いだものを、自分なりに作り替えて育てる役を持っています。守るだけでなく、新しい形にするところで本領が出ます。家の中より、外の場で輝きやすい人です。'},
+  '戌亥':{sub:'精神性を高める使命', body:'自分一代で、新しい世界を作る役を持っています。目に見えないもの、心や考え方の深いところに強く、人に頼りすぎない時ほど力が出ます。現実から離れすぎないよう足元を意識すると、釣り合いが取れます。'}
+};
+var NK = {
+  '甲':{sub:'大きな木', body:'まっすぐ上に伸びていく人。理想が高く、責任感が強い。曲がることが苦手で、一度つまずくと立ち直りに時間がかかるぶん、若いころの挫折が本当の強さになります。'},
+  '乙':{sub:'草花・つる草', body:'しなやかで、踏まれても根を張って芽を出すしぶとさがある人。人と人をつなぐ役が自然とまわってきます。ひとりで背負うより、支え合える相手がいる時に力が出ます。'},
+  '丙':{sub:'太陽', body:'そこにいるだけで場が明るくなる人。決めるのが早く、見返りを求めず与えられる。続けることより、火をつけるところで力が出ます。'},
+  '丁':{sub:'灯火', body:'表は穏やかで控えめ、内側に強い情熱を持っている人。誰かの役に立ち、喜ばれることで心が満ちていきます。支えてくれる人がいるほど、長く燃え続けられます。'},
+  '戊':{sub:'山', body:'どっしり動じず、口が堅く、信用される人。来る者は拒まず、去る者は追わない。変化より一貫性を大事にするぶん、頑固さが出た時は周りが見えにくくなります。'},
+  '己':{sub:'田畑の土', body:'穏やかで公平、縁の下で周りを育てる人。知識や経験を吸収して、内側に積み重ねていきます。迷い出すと止まらないところがあるので、決める基準を一つ持つと楽になります。'},
+  '庚':{sub:'鋼', body:'決めたら迷わず動く、信念の人。負けず嫌いでまっすぐ、一度認めた相手には誠実です。鍛えられるほど形になるので、厳しい場面で本領が出ます。'},
+  '辛':{sub:'宝石', body:'理想が高く、冷静で、品のある人。新しいものをすぐ自分のものにできる要領のよさがある一方、心が折れると戻るまでに時間がかかります。磨かれるほど光ります。'},
+  '壬':{sub:'大河', body:'好奇心が強く、懐が深く、相手によって違う顔を見せる人。一か所に留まると濁ってしまうので、自由に動ける場所で力が出ます。叱ってくれる人の存在が、流れを整えてくれます。'},
+  '癸':{sub:'雨露', body:'静かで繊細に見えて、どんな隙間にもしみ込んでいく、したたかな粘り強さを持つ人。人に尽くすことと、細やかな感性が持ち味です。抱え込みすぎず、ときどき整理することで澄んだままでいられます。'}
+};
+var CS = {
+  '貫索星':{sub:'守る', body:'人生の真ん中にあるのは「守る」こと。自分の信念や自分の世界を、自分で守り続ける人です。頑固なのは軸がある証拠で、流されないことがいちばんの強みです。'},
+  '石門星':{sub:'つなぐ・集める', body:'人と人をつなぎ、場を作ることが人生の真ん中にあります。一人より仲間がいる方が力が出て、集まりの中でこそ輝きます。'},
+  '鳳閣星':{sub:'楽しむ・伝える', body:'楽しむこと、伝えることが人生の真ん中にあります。場をなごませ、周りの肩の力を抜かせる力があり、楽しそうにしていることそのものが周りを助けます。'},
+  '調舒星':{sub:'感じて、表す', body:'自分の内側を深く掘り下げることが人生の真ん中にあります。誰にも似ていない感性を持ち、ひとりの時間がそのまま力の源になります。'},
+  '禄存星':{sub:'与える', body:'人を惹きつけ、人に尽くすことが人生の真ん中にあります。与えるほど巡ってくる人で、人の喜ぶ顔が自分の喜びになります。'},
+  '司禄星':{sub:'積み重ねる', body:'地道にコツコツ積み上げることが人生の真ん中にあります。派手さより堅実さ、変化より続けること。その積み重ねが、何よりの信用になります。'},
+  '車騎星':{sub:'動く', body:'考えるより先に体が動くことが人生の真ん中にあります。誰かのために突き進む時に力が出て、じっとしていると流れが鈍ります。'},
+  '牽牛星':{sub:'役目を担う', body:'責任と役割を担うことが人生の真ん中にあります。筋を通す姿勢と、任された立場で信頼を積むことで力が出ます。'},
+  '龍高星':{sub:'切り開く', body:'新しいことに挑み、外へ出ていくことが人生の真ん中にあります。同じ場所に留まると窮屈になり、動き続けることで道が開けます。'},
+  '玉堂星':{sub:'学んで、渡す', body:'学ぶこと、そして学んだことを人に渡すことが人生の真ん中にあります。知恵をじっくり深め、教え導く場面で本領が出ます。'}
+};
+
+function opt(el, from, to, sel, unit){
+  var h=''; for(var i=from;i<=to;i++) h+='<option value="'+i+'"'+(i===sel?' selected':'')+'>'+i+unit+'</option>';
+  document.getElementById(el).innerHTML=h;
+}
+opt('y',1930,2015,1975,'年'); opt('m',1,12,1,'月'); opt('d',1,31,1,'日');
+
+function setSex(s){ sex=s; ['F','M'].forEach(function(x){ document.getElementById('sx-'+x).classList.toggle('on', x===s); }); }
+function val(id){ return parseInt(document.getElementById(id).value,10); }
+function setText(id,t){ document.getElementById(id).textContent=t; }
+
+function run(){
+  var y=val('y'), m=val('m'), d=val('d'), err=document.getElementById('err');
+  var dt=new Date(y,m-1,d);
+  if(dt.getFullYear()!==y||dt.getMonth()!==m-1||dt.getDate()!==d){ err.textContent='その日付はありません。月と日を確かめてください。'; return; }
+  err.textContent='';
+  var k=calcKanshiForDate(y,m,d), tc=getTenchu(k.dayIdx);
+  var t=TC[tc], n=NK[k.dkan], c=CS[k.centerStar];
+  setText('tc-name', tc+'天中殺'); setText('tc-sub', t.sub); setText('tc-body', t.body);
+  setText('tc-why', 'あなたの生まれた日は「'+k.dkan+k.dshi+'」。そのまとまりで余ったのが「'+tc.charAt(0)+'」と「'+tc.charAt(1)+'」です。');
+  setText('nk-name', k.dkan); setText('nk-sub', n.sub); setText('nk-body', n.body); setText('nk-why', k.dkan);
+  setText('cs-name', k.centerStar); setText('cs-sub', c.sub); setText('cs-body', c.body);
+  last={y:y,m:m,d:d,tc:tc,nk:k.dkan,cs:k.centerStar};
+  buildCta();
+  document.getElementById('form').style.display='none';
+  var r=document.getElementById('result'); r.style.display='block';
+  window.scrollTo(0,0);
+}
+
+function buildCta(){
+  var box=document.getElementById('cta-box');
+  if(FROM==='hon'){
+    box.innerHTML='<a class="cta" href="'+LINE_ADD+'">占いのLINEに登録する</a>'+
+      '<p class="cta-note">登録したら、メニューの「鑑定」ボタンから、この続きを無料で観てもらえます。</p>';
+  } else {
+    var msg='無料鑑定をお願いします\n生年月日：'+last.y+'年'+last.m+'月'+last.d+'日\n性別：'+(sex==='M'?'男性':'女性')+
+            '\n（三つの結果：'+last.tc+'天中殺／'+last.nk+'／'+last.cs+'）\n気になること：';
+    box.innerHTML='<a class="cta" href="https://line.me/R/oaMessage/'+LINE_ID+'/?'+encodeURIComponent(msg)+'">この結果で無料鑑定を頼む</a>'+
+      '<p class="cta-note">LINEが開いて、生年月日と性別が入った状態になります。「気になること：」のあとに一行足して、そのまま送ってください。</p>';
+  }
+  // あとで「なぜ当たるのか（動画）」「㐂占の里」への入口をここに足す
+  document.getElementById('more').innerHTML='';
+}
+
+function again(){ document.getElementById('result').style.display='none'; document.getElementById('form').style.display='block'; window.scrollTo(0,0); }
+</script>
+</body>
+</html>
